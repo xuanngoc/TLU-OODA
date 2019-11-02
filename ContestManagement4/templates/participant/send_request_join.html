@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h4 class="text-center">{{ contest.name }}</h4>
+    <hr>
+    
+    <form action=" {% url 'send_request' contest.id %} " method='POST'>
+    {% csrf_token %}
+            <div class="form-group">
+                <label for="subject">Chọn các đăng ký tham gia môn thi</label>               
+                <ul>
+                    {% for subject in subjects %}
+                        <li><input class="form-check-label" type="checkbox" id="subject" name="subject" value="{{ subject.name }}">{{ subject.name }}</li>                        
+                    {% endfor %}
+                </ul>
+            </div>
+        
+            <button type="sutbmit" class="btn btn-primary">Gửi đăng kí</button>
+        
+    </form>
+
+{% endblock content %}

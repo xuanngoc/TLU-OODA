@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h4 class="text-center">Thêm thí sinh dự thi</h4>
+    <hr>
+    
+    <form action=" {% url 'create_student' %} " method='POST' class="m-5">
+        {% csrf_token %}
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            
+        {% endif %}
+            <div class="form-group">
+                <label for="name">Tên thí sinh</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="birthday">Ngày sinh</label>
+                <input type="text" class="form-control" id="birthday" name="birthday" placeholder="">
+            </div>
+            
+            <div class="form-group">
+                <label for="gender">Giới tính</label>
+                <input type="text" class="form-control" id="gender" name="gender" placeholder="">
+            </div>
+
+            <div class="form-group">
+                <label for="identity_number">Số CMND</label>
+                <input type="text" class="form-control" id="identity_number" name="identity_number" placeholder="">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Số điện thoại</label>
+                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="">
+            </div>
+
+            <div class="form-group">
+                <label for="school">Trường</label>
+                <select class="form-control" name="school">
+                    {% for school in all_schools %}
+                        <option value="{{ school.id }}">{{ school.name }}</option>
+                    {% endfor %}
+                    
+                </select>
+            </div>
+            
+             <div class="form-group">
+                <label for="subject">Môn thi</label>
+                <select class="form-control" name="subject">
+                    {% for subject in subjects_in_c %}
+                        <option value="{{ subject.id }}">{{ subject.name }}</option>
+                    {% endfor %}
+                    
+                </select>
+            </div>
+
+            <hr>
+
+            
+        
+            <button type="submit" class="btn btn-primary m-4">Thêm thí sinh</button>
+        
+    </form>
+
+{% endblock content %}

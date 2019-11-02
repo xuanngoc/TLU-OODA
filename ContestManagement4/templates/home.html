@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Homepage</h2>
+    <p>Welcome to my site, {% if user.is_authenticated %}
+                                {% if user.is_DonViDuThi %}
+                                    đơn vị {{ user.name }}
+                                
+                                {% elif user_BanToChuc %}
+                                    ban tổ chức {{ user.username }}
+                                    
+                                {% else %}
+                                    admin  -   {{ user.username }}
+                                {% endif %}
+                            {% else %}
+                                visitor
+                            
+                            {% endif %} !</p>
+
+    <p>
+        
+    </p>
+{% endblock content %}

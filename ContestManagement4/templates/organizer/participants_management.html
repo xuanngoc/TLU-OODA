@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div >
+        <h4 class="text-center ">Danh sách đơn vị dự thi</h4>
+        <hr>
+        <table class="table table-bordered ">
+            <thead class="bg-info ">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên đơn vị dự thi</th>
+                <th scope="col">Email</th>
+                <th scope="col">Số điện thoai</th>
+                <th scope="col" class="text-center">Sửa</th>
+                <th scope="col" class="text-center">Xóa</th>
+            </tr>
+            </thead>
+            <tbody>           
+                {% for participant in all_participants %}
+                <tr >
+                    <th scope="row" class="font-weight-normal">{{ forloop.counter }}</th>
+                    <th class="font-weight-normal">{{ participant.name }} </th>
+                    <th class="font-weight-normal text-danger">{{ participant.email }}  </th>
+                    <th class="font-weight-normal">{{ participant.phone_number }}</th>
+                    <th class="font-weight-normal text-center">
+                        <a href="{% url 'edit_participant' participant.id %}">
+                            <button type="button" class="btn btn-default btn-sm bg-primary" > Sửa </button>
+                        </a>
+                    </th>
+                    <th class="font-weight-normal text-center">
+                        <button type="button" class="btn btn-default btn-sm bg-danger text-warning" onclick="verify_del('{{ participant.id }}', '{{ participant.name }}')"> Xóa </button>  
+                    </th>
+                    {% comment %} {% url 'del_participant' participant.id %} {% endcomment %}
+                 </tr>
+                {% endfor %} 
+
+            </tbody>
+        </table>
+        <script>
+            function verify_del(participant_id, participant_name){
+                var r = confirm("Bạn muốn xóa đơn vị dự thi này ? \n\n" + "***    " + participant_name + "    ***");
+                if(r == true){
+                    document.location.href = "del_participant" + "/" + participant_id;
+                    console.log("del_participant" + "/" + participant_id);
+                    alert("Xpas thanh coong")
+                    
+                }else{
+                    alert("khong xoas")
+                }
+                
+            }
+        </script>
+
+        <hr>    
+    </div>
+
+    <p>
+        <strong>Tổng số đơn vị dự thi: {{ all_participants.count }}
+    </p>
+
+    <a href="{% url 'add_participant' %}">
+        <button type="button" class="btn bg-primary text-white " > Thêm đơn vị dự thi </button>
+    </a>
+
+{% endblock content %}

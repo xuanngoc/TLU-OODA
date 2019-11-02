@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h4 class="text-center">Chi tiết yêu cầu đăng ký</h4>
+    <hr>
+    
+    <form action=" # " method='POST'>
+        {% csrf_token %}
+
+            <div class="form-group">
+                <label for="participant_name">Tên kì thi</label>
+                <input type="text" class="form-control"  value="{{ cp.contest }}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="email">Tên đơn vị dự thi</label>
+                <input type="text" class="form-control" i value="{{ cp.participant }}" disabled>
+            </div>      
+            <div class="form-group">
+                <label for="subject">Các môn thi đã đăng ký</label>               
+                <ul>
+                    {% for subject in subjects_in_c %}
+                        {% if subject in subjects_in_cp %}
+                            <li><input class="form-check-label" type="checkbox" id="subject" name="subject" value="{{ subject.name }}" checked disabled>{{ subject.name }}</li>
+                        {% else %}
+                            <li><input class="form-check-label" type="checkbox" id="subject" name="subject" value="{{ subject.name }}" disabled>{{ subject.name }}</li>
+                        {% endif %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        
+            <div class="form-group">
+                <a href=" {% url 'accept_request' cp.id %} ">
+                    <button type="button" class="btn btn-default btn-sm bg-primary" id="myBtn"> Chấp nhận </button>
+                </a>
+                <a href=" {% url 'reject_request' cp.id %} ">
+                    <button type="button" class="btn btn-default btn-sm bg-danger text-warning"> Từ chối </button>
+                </a>
+            </div>
+             
+                        
+        
+    </form>
+
+{% endblock content %}

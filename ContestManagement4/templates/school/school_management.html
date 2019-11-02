@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div >
+        <h4 class="text-center ">Danh sách trường học thuộc đơn vị {{ request.user.name }}</h4>
+        <hr>
+        <table class="table table-bordered ">
+            <thead class="bg-info ">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên trường</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col">Website</th>
+                <th scope="col">Email</th>
+                <th scope="col">Số điện thoai</th>
+                <th scope="col" class="text-center">Sửa</th>
+                <th scope="col" class="text-center">Xóa</th>
+            </tr>
+            </thead>
+            <tbody>           
+                {% for school in all_schools %}
+                <tr >
+                    <th scope="row" class="font-weight-normal">{{ forloop.counter }}</th>
+                    <th class="font-weight-normal">{{ school.name }} </th>
+                    <th class="font-weight-normal text-danger">{{ school.address }}  </th>
+                    <th class="font-weight-normal">{{ school.website }}</th>
+                    <th class="font-weight-normal">{{ school.email }}</th>
+                    <th class="font-weight-normal">{{ school.phone_number}}</th>
+
+                    <th class="font-weight-normal text-center">
+                        <a href=" {% url 'edit_school' school.id %} ">
+                            <button type="button" class="btn btn-default btn-sm bg-primary" > Sửa </button>
+                        </a>
+                    </th>
+                    <th class="font-weight-normal text-center">
+                        <button type="button" class="btn btn-default btn-sm bg-danger text-warning" onclick="verify_del('{{ school.id }}', '{{ school.name }}')"> Xóa </button>  
+                    </th>
+                    {% comment %} {% url 'del_participant' participant.id %} {% endcomment %}
+                 </tr>
+                {% endfor %} 
+
+            </tbody>
+        </table>
+        <script>
+            function verify_del(school_id, school_name){
+                var r = confirm("Bạn muốn xóa trường này ? \n\n" + "***    " + school_name + "    ***");
+                if(r == true){
+                    document.location.href = "del_school" + "/" + school_id;
+                    console.log("del_school" + "/" + school_id);
+                    alert("Xóa thành công")
+                    
+                }else{
+                    alert("Không xóa")
+                }
+                
+            }
+        </script>
+
+        <hr>    
+    </div>
+
+    <p>
+        <strong>Tổng số trường: {{ all_schools.count }}
+    </p>
+
+    <a href="{% url 'add_school' %}">
+        <button type="button" class="btn bg-primary text-white " > Thêm trường học </button>
+    </a>
+
+{% endblock content %}

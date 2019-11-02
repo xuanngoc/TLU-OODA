@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div >
+        <h4 class="text-center ">Danh sách các đơn vị dự thi đã được duyệt</h4>
+        <hr>
+        <table class="table table-bordered ">
+            <thead class="bg-info ">
+            <tr>
+                <th scope="col" class="text-center">STT</th>
+                <th scope="col" class="text-center">Đơn vị dự thi</th>
+                <th scope="col" class="text-center">Ngày đăng ký</th>
+                <th scope="col" class="text-center">Thí sinh tham gia</th>
+            </tr>
+            </thead>
+            <tbody>           
+                {% for cp in all_contest_participant %}
+                <tr >
+                    <th scope="row" class="font-weight-normal text-center">{{ forloop.counter }}</th>
+                    <th class="font-weight-normal text-danger">{{ cp.participant }}</th>
+                    <th class="font-weight-normal">{{ cp.date }}</th>
+
+                    <th class="font-weight-normal text-center">
+                        <a href=" {% url 'detail_list_student' cp.participant.id %} ">
+                            <button type="button" class="btn btn-default btn-sm bg-primary pl-5 pr-5 " > Xem chi tiết </button>
+                        </a>
+                    </th>
+                 </tr>
+                {% endfor %} 
+
+            </tbody>
+        </table>
+
+
+
+        <hr>    
+    </div>
+
+    <p>
+        <strong>Tổng số đơn vị: {{ all_contest_participant.count }}
+    </p>
+
+
+    
+
+    
+
+{% endblock content %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    
+    <h4>Tạo tài khoản</h4>
+    <hr>
+    
+    <form action="{% url 'create_account' %}" method='POST'>
+        {% csrf_token %}
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            
+        {% endif %}
+            <div class="form-group">
+                <label for="username">Tên tài khoản</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="username">
+            </div>
+            <div class="form-group">
+                <label for="account_type">Loại tài khoản</label>
+                <select class="form-control" name="account_type" id="account_type" onchange="isParticipant()">
+                    <option value='BanToChuc'>Ban tổ chức</option>
+                    <option value='DonViDuThi'>Đơn vị dự thi</option>
+                    
+                </select>
+            </div>
+            <div class="form-group" id="participant" style="visibility: hidden;" >
+                <label for="paticipant_name">Tạo tài khoản cho đơn vị tổ chức: </label>
+                <select class="form-control" name="paticipant_name" id="paticipant_name" >
+                    {% for participant in all_participants %}
+                        <option value="{{ participant.name }}">{{ participant.name }}</option>
+                    {% endfor %}
+                    
+                </select>
+            </div>
+            <script type="text/javascript">
+                function isParticipant(){
+                    if(document.getElementById('account_type').value == "DonViDuThi"){
+                        document.getElementById("participant").style.visibility="visible"
+                    }else{
+                        document.getElementById("participant").style.visibility="hidden"
+                    }
+                }
+
+                
+            </script>
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <input type="text" class="form-control" id="password" name="password" placeholder="password">
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
+        
+    </form>
+
+{% endblock content %}

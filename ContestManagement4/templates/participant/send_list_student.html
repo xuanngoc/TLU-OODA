@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div >
+        <h4 class="text-center">Danh sách các học sinh</h4>
+        <hr>
+        <table class="table table-bordered" id="table">
+                <thead class="bg-info ">
+                <tr>
+                    <th scope="col" class="text-center">STT</th>
+                    <th scope="col" class="text-center">Tên thí sinh</th>
+                    <th scope="col" class="text-center">Ngày sinh</th>
+                    <th scope="col" class="text-center">Giới tính</th>
+                    <th scope="col" class="text-center">Số CMND</th>
+                    
+                    <th scope="col" class="text-center">Số điện thoại</th>
+                    <th scope="col" class="text-center">Trường</th>
+                    <th scope="col" class="text-center">Môn thi</th>
+                    <th scope="col" class="text-center bg-primary" >Sửa</th>
+                    <th scope="col" class="text-center bg-warning">Xóa</th>
+                </tr>
+                </thead>
+                <tbody>           
+                    {% for student in all_students %}
+                    <tr >
+                        <th scope="row" class="font-weight-normal text-center">{{ forloop.counter }}</th>
+                        <th class="font-weight-normal text-center">{{ student.name }}</th>
+                        <th class="font-weight-normal text-center">{{ student.birthday }}</th>
+                        <th class="font-weight-normal text-center">{{ student.gender }}</th>
+                        <th class="font-weight-normal text-center">{{ student.identity_number }}</th>
+                        
+                        <th class="font-weight-normal text-center">{{ student.phone_numer }}</th>
+                        <th class="font-weight-normal text-center">{{ student.school }}</th>
+                        <th class="font-weight-normal text-center">{{ student.subject }}</th>
+
+                        
+
+
+
+                        <th class="font-weight-normal text-center">
+                            <a href=" {% url 'edit_student' student.id %}">
+                                <button type="button" class="btn btn-default btn-sm bg-primary" > Sửa </button>
+                            </a>    
+                        </th>
+                        <th class="font-weight-normal text-center">
+                            <button type="button" class="btn btn-default btn-sm bg-danger text-warning" onclick="verify_del('{{ student.id }}', '{{ student.name }}')"> Xóa </button>   
+                        </th>
+                        
+                    </tr>
+                    {% endfor %} 
+
+                </tbody>
+            </table>
+
+            <script>
+                function verify_del(student_id, student_name){
+                    var r = confirm("Bạn muốn xóa thí sinh dự thi này ? \n\n" + "***    " + student_name + "    ***");
+                    if(r == true){
+                        document.location.href = "del_student" + "/" + student_id + "/";
+                        console.log("del_participant" + "/" + student_name);
+                        alert("Xóa thành công")
+                        
+                    }else{
+                        alert("Không xóa")
+                    }
+                }
+            </script>
+
+        </div>
+        
+        <p>
+            <strong>Tổng số thí sinh đăng ký dự thi: {{ all_students.count }}
+        </p>
+
+    <a href="{% url 'add_student' %}">
+        <button type="button" class="btn bg-primary text-white " > Thêm thí sinh dự thi </button>
+    </a>
+
+
+    
+
+{% endblock content %}

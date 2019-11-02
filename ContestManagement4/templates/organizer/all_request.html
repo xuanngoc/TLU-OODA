@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div >
+        <h4 class="text-center ">Danh sách đăng ký tham dự kì thi của đơn vị dự thi</h4>
+        <hr>
+        <table class="table table-bordered ">
+            <thead class="bg-info ">
+            <tr>
+                <th scope="col" class="text-center">STT</th>
+                <th scope="col">Tên kì thi</th>
+                <th scope="col">Đơn vị dự thi</th>
+                <th scope="col">Ngày đăng ký</th>
+                <th scope="col" class="text-center">Tình trạng</th>
+                <th scope="col" class="text-center">Duyệt</th>
+            </tr>
+            </thead>
+            <tbody>           
+                {% for cp in all_contest_participant %}
+                <tr >
+                    <th scope="row" class="font-weight-normal text-center">{{ forloop.counter }}</th>
+                    <th class="font-weight-normal">
+                       {{ cp.contest }}
+                    </th>
+                    <th class="font-weight-normal text-danger">
+                        <a href=" {% url 'detail_request_from_participant' cp.id  %} "> {{ cp.participant }}  </a> 
+                    </th>
+                    <th class="font-weight-normal">{{ cp.date }}</th>
+                    <th class="text-center">{{ cp.display_status_value }}</th>
+                    <th class="font-weight-normal text-center">
+                        <a href=" {% url 'accept_request' cp.id %} ">
+                            <button type="button" class="btn btn-default btn-sm bg-primary" id="myBtn"> Chấp nhận </button>
+                        </a>
+                        <a href=" {% url 'reject_request' cp.id %} ">
+                            <button type="button" class="btn btn-default btn-sm bg-warning"> Từ chối </button>
+                        </a>
+
+                        
+                        
+                        
+                        </th>
+                    
+                    {% comment %} <th class="font-weight-normal text-center">
+                        <button type="button" class="btn btn-default btn-sm bg-danger text-warning" onclick="verify_del('{{ participant.id }}', '{{ participant.name }}')"> Xóa </button>  
+                    </th> {% endcomment %}
+                    {% comment %} {% url 'del_participant' participant.id %} {% endcomment %}
+                 </tr>
+                {% endfor %} 
+
+            </tbody>
+        </table>
+
+
+
+        <hr>    
+    </div>
+
+    <p>
+        <strong>Tổng số đơn vị đăng ký: {{ all_contest_participant.count }}
+    </p>
+
+
+    
+
+    
+
+{% endblock content %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h4 class="text-center">Thêm kì thi thi</h4>
+    <hr>
+    
+    <form action=" {% url 'create_contest' %} " method='POST'>
+        {% csrf_token %}
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            
+        {% endif %}
+            <div class="form-group">
+                <label for="contest_name">Tên kì thi</label>
+                <input type="text" class="form-control" id="contest_name" name="contest_name" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="day_start">Ngày bắt đầu</label>
+                <input type="date" class="form-control" id="day_start" name="day_start" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="day_end">Ngày kết thúc</label>
+                <input type="date" class="form-control" id="day_end" name="day_end" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="subject">Các môn thi</label>
+                
+                <ul>
+                    {% for subject in all_subjects %}
+                        <li><input class="form-check-label" type="checkbox" id="subject" name="subject" value="{{ subject.name }}">{{ subject.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        
+            <button type="sutbmit" class="btn btn-primary">Tạo đơn vị dự thi</button>
+        
+    </form>
+
+{% endblock content %}

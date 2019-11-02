@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h4 class="text-center">Sửa thông tin kì thi</h4>
+    <hr>
+    
+    <form action=" # " method='POST'>
+        {% csrf_token %}
+
+            <div class="form-group">
+                <label for="contest_name">Tên kì thi</label>
+                <input type="text" class="form-control" id="contest_name" name="contest_name" value="{{ contest.name }}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="day_start">Ngày bắt đầu</label>
+                <input type="date" class="form-control" id="day_start" name="day_start" value="{{ contest.day_start }}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="day_end">Ngày kết thúc</label>
+                <input type="date" class="form-control" id="day_end" name="day_end" value="{{ contest.end }}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="subject">Các môn thi</label>
+                
+                <ul>
+                    {% for subject in all_subjects %}
+                        {% if subject in subjects_in_contest %}
+                            <li><input class="form-check-label" type="checkbox" id="subject" name="subject" value="{{ subject.name }}" checked disabled>{{ subject.name }} </li>
+                        {% else %}
+                            <li><input class="form-check-label" type="checkbox" id="subject" name="subject" value="{{ subject.name }}" disabled>{{ subject.name }}</li>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </ul>
+            </div>
+        
+            <button type="sutbmit" class="btn btn-primary">OK</button>
+        
+    </form>
+
+{% endblock content %}

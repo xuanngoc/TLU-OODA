@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h4 class="text-center">Sửa thông tin môn thi</h4>
+    <hr>
+    
+    <form action=" {% url 'update_subject' subject.id %} " method='POST'>
+        {% csrf_token %}
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            
+        {% endif %}
+            <div class="form-group">
+                <label for="subject_name">Tên môn thi thi</label>
+                <input type="text" class="form-control" id="subject_name" name="subject_name" value="{{ subject.name }}">
+            </div>
+            <hr>
+
+           
+            
+        
+            <button type="submit" class="btn btn-primary">Lưu thông tin môn thi</button>
+        
+    </form>
+
+{% endblock content %}

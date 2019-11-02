@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div >
+        <h4 class="text-center ">Danh sách các cuộc thi</h4>
+        <hr>
+        <table class="table table-bordered ">
+            <thead class="bg-info ">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên kì thi</th>
+                <th scope="col">Thời gian bắt đầu</th>
+                <th scope="col">Thời gian kết thúc</th>
+                <th scope="col">Số môn</th>
+                <th scope="col" class="text-center">Sửa</th>
+                <th scope="col" class="text-center">Xóa</th>
+            </tr>
+            </thead>
+            <tbody>           
+                {% for contest in all_contests %}
+                <tr >
+                    <th scope="row" class="font-weight-normal">{{ forloop.counter }}</th>
+                    <th class="font-weight-normal">{{ contest.name }} </th>
+                    <th class="font-weight-normal text-danger">{{ contest.day_start }}  </th>
+                    <th class="font-weight-normal">{{ contest.day_end }}</th>
+                    <th class="font-weight-normal">{{ contest.subjects.count }}</th>
+                    <th class="font-weight-normal text-center">
+                        <a href=" {% url 'edit_contest' contest.id %} ">
+                            <button type="button" class="btn btn-default btn-sm bg-primary" > Sửa </button>
+                        </a>    
+                    </th>
+                    <th class="font-weight-normal text-center">
+                        <button type="button" class="btn btn-default btn-sm bg-danger text-warning" onclick="verify_del('{{ contest.id }}', '{{ contest.name }}')" > Xóa </button>   
+                    </th>
+                 </tr>
+                {% endfor %} 
+
+            </tbody>
+        </table>
+
+        <script>
+            function verify_del(contest_id, contest_name){
+                var r = confirm("Bạn muốn xóa kì thi này ? \n\n" + "***    " + contest_name + "    ***");
+                if(r == true){
+                    document.location.href = "del_contest" + "/" + contest_id;
+                    console.log("del_contest" + "/" + contest_id);
+                    alert("Xóa thành công")
+                    
+                }else{
+                    alert("Xóa không thành công")
+                }
+                
+            }
+        </script>
+
+        <hr>    
+    </div>
+
+    <p>
+        <strong>Tổng số kì thi: {{ all_contests.count }}
+    </p>
+
+    <a href="{% url 'add_contest' %}">
+        <button type="button" class="btn bg-primary text-white " > Thêm kì thi </button>
+    </a>
+
+{% endblock content %}

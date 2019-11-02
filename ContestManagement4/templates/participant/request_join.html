@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h4 class="text-center">Danh sách các kì thi học sinh giỏi</h4>
+    <hr>
+    <table class="table table-bordered" id="table">
+            <thead class="bg-info ">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên kì thi</th>
+                <th scope="col">Thời gian bắt đầu</th>
+                <th scope="col">Thời gian kết thúc</th>
+                <th scope="col">Số môn thi</th>
+                <th scope="col" class="text-center">Đăng ký</th>
+            </tr>
+            </thead>
+            <tbody>           
+                {% for contest in all_contests %}
+                <tr >
+                    <th scope="row" class="font-weight-normal">{{ forloop.counter }}</th>
+                    <th class="font-weight-normal">
+                        <a href=" {% url 'read_contest' contest.id %} "> {{ contest.name }} </a>
+                    </th>
+                    <th class="font-weight-normal text-danger" id="{{ contest.day_start }}" >{{ contest.day_start }}  </th>
+                    <th class="font-weight-normal">{{ contest.day_end }}</th>
+
+                    <th class="font-weight-normal">{{ contest.subjects.count}}</th>
+
+                    <th class="font-weight-normal text-center">
+                        <a href=" {% url 'detail_request' contest.id %} ">
+                            <button type="button" class="btn btn-default btn-sm bg-primary" id="myBtn" > Đăng ký </button>
+                        </a>    
+                    </th>
+                    
+                 </tr>
+                {% endfor %} 
+
+            </tbody>
+        </table>
+
+        <script>
+            function checkDate(day_start){
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; 
+                var yyyy = today.getFullYear();
+
+                if(dd<10) {
+                    dd = '0'+dd
+                } 
+
+                if(mm<10) {
+                    mm = '0'+mm
+                } 
+                today = mm + '/' + dd + '/' + yyyy;
+
+
+
+                alert(day_start.getDay)
+            }
+        </script>
+
+        
+    
+
+{% endblock content %}

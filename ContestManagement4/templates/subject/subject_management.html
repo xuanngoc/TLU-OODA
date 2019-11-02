@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div >
+        <h4 class="text-center ">Danh sách các môn thi</h4>
+        <hr>
+        <table class="table table-bordered ">
+            <thead class="bg-info ">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên môn</th>
+                <th scope="col" class="text-center">Sửa</th>
+                <th scope="col" class="text-center">Xóa</th>
+            </tr>
+            </thead>
+            <tbody>           
+                {% for subject in all_subjects %}
+                <tr >
+                    <th scope="row" class="font-weight-normal">{{ forloop.counter }}</th>
+                    <th class="font-weight-normal">{{ subject.name }} </th>
+                    
+                    <th class="font-weight-normal text-center">
+                        <a href=" {% url 'edit_subject' subject.id %} ">
+                            <button type="button" class="btn btn-default btn-sm bg-primary" > Sửa </button>
+                        </a>    
+                    </th>
+                    <th class="font-weight-normal text-center">
+                        <button type="button" class="btn btn-default btn-sm bg-danger text-warning" onclick="verify_del('{{ subject.id }}', '{{ subject.name }}')" > Xóa </button>  
+                    </th>
+                 </tr>
+                {% endfor %} 
+
+            </tbody>
+        </table>
+
+        <script>
+            function verify_del(subject_id, subject_name){
+                var r = confirm("Bạn muốn xóa môn thi này ? \n\n" + "***    " + subject_name + "    ***");
+                if(r == true){
+                    document.location.href = "del_subject" + "/" + subject_id;
+                    console.log("del_subject" + "/" + subject_id);
+                    alert("Xóa thành công")
+                    
+                }else{
+                    alert("Xóa không thành công")
+                }
+                
+            }
+        </script>
+
+        <hr>    
+    </div>
+
+    <p>
+        <strong>Tổng số môn thi: {{ all_subjects.count }}
+    </p>
+
+    <a href="{% url 'add_subject' %}">
+        <button type="button" class="btn bg-primary text-white " > Thêm môn thi </button>
+    </a>
+
+{% endblock content %}

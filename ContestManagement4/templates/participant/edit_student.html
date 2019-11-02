@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h4 class="text-center">Sửa thông tin thí sinh dự thi</h4>
+    <hr>
+    
+    <form action=" {% url 'update_student' student.id %} " method='POST'>
+        {% csrf_token %}
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            
+        {% endif %}
+            <div class="form-group">
+                <label for="participant_name">Tên thí sinh</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ student.name }}">
+            </div>
+            <div class="form-group">
+                <label for="email">Ngày sinh</label>
+                <input type="text" class="form-control" id="birthday" name="birthday" value="{{ student.birthday }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone_number">Giới tính</label>
+                <input type="text" class="form-control" id="gender" name="gender" value="{{ student.gender }}">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Trường</label>
+                <input type="text" class="form-control" id="school" name="school" value="{{ student.school }}">
+            </div>
+            <div class="form-group">
+                <label for="email">Số điện thoại</label>
+                <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ student.phone_numer }}">
+            </div>
+            <div class="form-group">
+                <label for="email">Môn thi</label>
+                <input type="text" class="form-control" id="subject" name="subject" value="{{ student.subject_test }}">
+            </div>
+
+            <hr>
+
+            
+        
+            <button type="submit" class="btn btn-primary">Lưu thông tin thí sinh</button>
+        
+    </form>
+
+{% endblock content %}
