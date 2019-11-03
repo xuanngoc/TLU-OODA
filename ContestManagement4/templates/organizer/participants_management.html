@@ -8,6 +8,7 @@
             <thead class="bg-info ">
             <tr>
                 <th scope="col">STT</th>
+                <th scope="col">Tên đăng nhập</th>
                 <th scope="col">Tên đơn vị dự thi</th>
                 <th scope="col">Email</th>
                 <th scope="col">Số điện thoai</th>
@@ -18,7 +19,8 @@
             <tbody>           
                 {% for participant in all_participants %}
                 <tr >
-                    <th scope="row" class="font-weight-normal">{{ forloop.counter }}</th>
+                    <th scope="row" class="font-weight-normal text-center">{{ forloop.counter }}</th>
+                    <th scope="row" class="font-weight-normal" style="font-size:20px;">{{ participant.username }}</th>
                     <th class="font-weight-normal">{{ participant.name }} </th>
                     <th class="font-weight-normal text-danger">{{ participant.email }}  </th>
                     <th class="font-weight-normal">{{ participant.phone_number }}</th>
